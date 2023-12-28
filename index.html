@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahasa G</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Bahasa G</h2>
+
+        <div class="form-group">
+            <label for="inputString">Masukkan kata :</label>
+            <input type="text" class="form-control" id="inputString" placeholder="Masukkan string">
+        </div>
+
+        <button class="btn btn-primary" onclick="transformString()">Transformasi</button>
+
+        <div class="mt-3">
+            <label for="outputString">Hasil:</label>
+            <textarea class="form-control" id="outputString" rows="3" readonly></textarea>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function transformString() {
+            // Mendapatkan nilai input
+            const inputString = document.getElementById('inputString').value;
+
+            // Memanggil fungsi ubahString
+            const hasilTransformasi = ubahString(inputString);
+
+            // Menampilkan hasil transformasi pada textarea output
+            document.getElementById('outputString').value = hasilTransformasi;
+        }
+
+        function ubahString(str) {
+            const hurufVokal = ["a", "i", "u", "e", "o"];
+
+            // Pecah string menjadi array huruf
+            const hurufArray = str.split("");
+
+            // Inisialisasi hasil akhir
+            let hasil = "";
+
+            // Perulangan untuk setiap huruf dalam array
+            for (let i = 0; i < hurufArray.length; i++) {
+                const huruf = hurufArray[i];
+
+                // Jika huruf adalah vokal
+                if (hurufVokal.includes(huruf)) {
+                    // Tambahkan 'g' setelah huruf dan tambahkan huruf itu sendiri
+                    hasil += huruf + "g" + huruf;
+                } else {
+                    // Jika huruf konsonan, cek huruf vokal berikutnya (jika ada)
+                    const hurufVokalBerikutnya = hurufArray[i + 1];
+
+                    // Jika ada huruf vokal berikutnya, tambahkan 'g' setelah huruf vokal dan tambahkan huruf vokal itu sendiri
+                    if (hurufVokal.includes(hurufVokalBerikutnya)) {
+                        hasil += huruf + hurufVokalBerikutnya + "g" + hurufVokalBerikutnya;
+                        // Lewati huruf vokal berikutnya karena sudah ditangani
+                        i++;
+                    } else {
+                        // Jika tidak ada huruf vokal berikutnya, tambahkan 'g' setelah huruf konsonan dan tambahkan huruf itu sendiri
+                        hasil += huruf;
+                    }
+                }
+            }
+
+            return hasil;
+        }
+    </script>
+
+</body>
+
+</html>
